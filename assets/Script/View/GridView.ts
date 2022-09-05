@@ -1,4 +1,4 @@
-import {ANITIME, CELL_HEIGHT, CELL_MIN_MOVE_NUM, CELL_NAME_PREFIX, CELL_WIDTH} from '../Model/ConstValue';
+import {ANITIME, CELL_HEIGHT, CELL_MIN_MOVE_NUM, CELL_NAME_PREFIX, CELL_WIDTH, GRID_HEIGHT, GRID_WIDTH} from '../Model/ConstValue';
 
 import AudioUtils from "../Utils/AudioUtils";
 import GameController from "../Controller/GameController";
@@ -187,8 +187,8 @@ export default class GridView extends cc.Component{
     }
     // 显示选中的格子背景
     updateSelect(pos){
-         for(let i = 1; i <=9 ; i++){
-            for(let j = 1 ; j <=9 ; j ++){
+         for(let i = 1; i <=GRID_WIDTH ; i++){
+            for(let j = 1 ; j <=GRID_HEIGHT ; j ++){
                 if(this.cellViews[i][j]){
                     const cellScript = this.cellViews[i][j].getComponent("CellView");
                     if(pos.x == j && pos.y ==i){
@@ -207,8 +207,8 @@ export default class GridView extends cc.Component{
      * 根据cell的model返回对应的view
      */
     findViewByModel(model){
-        for(let i = 1; i <=9 ; i++){
-            for(let j = 1 ; j <=9 ; j ++){
+        for(let i = 1; i <=GRID_WIDTH ; i++){
+            for(let j = 1 ; j <=GRID_HEIGHT ; j ++){
                 if(this.cellViews[i][j] && this.cellViews[i][j].getComponent("CellView").model == model){
                     return {view:this.cellViews[i][j],x:j, y:i};
                 }
