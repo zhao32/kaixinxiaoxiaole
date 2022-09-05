@@ -1,4 +1,4 @@
-import { CELL_TYPE, ANITIME, CELL_STATUS, GRID_HEIGHT } from "./ConstValue";
+import { CELL_TYPE, ANITIME, CELL_STATUS, GRID_WIDTH } from "./ConstValue";
 import {IDGen} from "../Utils/IDGen";
 
 class BaseModel{

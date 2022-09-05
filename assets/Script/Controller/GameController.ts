@@ -1,4 +1,4 @@
-import {CELL_HEIGHT, CELL_WIDTH, GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH} from "../Model/ConstValue";
+import {CELL_BASE_NUM, CELL_HEIGHT, CELL_WIDTH, GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH} from "../Model/ConstValue";
 
 const {ccclass, property} = cc._decorator;
 
@@ -23,7 +23,7 @@ export default class GameController extends cc.Component{
     // use this for initialization
     onLoad() {
         this.gameModel = new GameModel();
-        this.gameModel.init(4);
+        this.gameModel.init(CELL_BASE_NUM);
         this.gridScript = this.grid.getComponent("GridView");
         this.gridScript.setController(this);
         this.gridScript.showOpt(this.gameModel.getInitOpt());
