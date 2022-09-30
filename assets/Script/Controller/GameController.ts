@@ -20,6 +20,8 @@ export default class GameController extends cc.Component{
 
     isCanMove: boolean;// 是否可以滑动
 
+    MOVED:boolean = false
+
     // use this for initialization
     onLoad() {
         this.gameModel = new GameModel();
@@ -44,13 +46,20 @@ export default class GameController extends cc.Component{
             if(self.isInPlayAni){//播放动画中，不允许点击
                 return true;
             }
+            this.MOVED = true
             const touchPos = eventTouch.getLocation();
             const cellPos = self.convertTouchPosToCell(touchPos);
             if(cellPos){
                 const opt = self.gameModel.selectCell(cellPos);
                 self.isCanMove = opt.cellOptList.length < 3;
                 self.gridScript.showOpt(opt);
-                self.disableTouch(opt);
+                // self.disableTouch(opt);
+
+                this.node.runAction(cc.sequence(cc.delayTime(opt.curTime), cc.callFunc(function () {
+                    if (self.isCanMove) {
+                        self.isInPlayAni = false;
+                    }
+                }, this)));
             }
             else{
                 self.isCanMove = false;
@@ -59,7 +68,7 @@ export default class GameController extends cc.Component{
         }, this);
         // 滑动操作逻辑
         this.grid.on(cc.Node.EventType.TOUCH_MOVE, function(eventTouch){
-            if(self.isCanMove){
+            if(self.isCanMove && this.MOVED){
                 const startTouchPos = eventTouch.getStartLocation();
                 const startCellPos = self.convertTouchPosToCell(startTouchPos);
                 const touchPos = eventTouch.getLocation();
@@ -72,14 +81,17 @@ export default class GameController extends cc.Component{
                     const opt = self.gameModel.selectCell(cellPos);
                     self.gridScript.showOpt(opt);
                     self.disableTouch(opt);
+                    this.MOVED = false
                 }
             }
         }, this);
         this.grid.on(cc.Node.EventType.TOUCH_END, function(eventTouch){
             // console.log("1111");
+            this.MOVED = false
         }, this);
         this.grid.on(cc.Node.EventType.TOUCH_CANCEL, function(eventTouch){
             // console.log("1111");
+            this.MOVED = false
         }, this);
     }
     // 根据点击的像素位置，转换成网格中的位置
@@ -94,11 +106,13 @@ export default class GameController extends cc.Component{
     }
 
     //一段时间内禁止操作
-    disableTouch(opt: Opt){
+    //一段时间内禁止操作
+    disableTouch(opt: Opt) {
         let self = this;
         this.isInPlayAni = true;
-        this.node.runAction(cc.sequence(cc.delayTime(opt.curTime),cc.callFunc(function(){
+        this.node.runAction(cc.sequence(cc.delayTime(opt.curTime), cc.callFunc(function () {
             self.isInPlayAni = false;
+            self.isCanMove = true
         }, this)));
     }
 

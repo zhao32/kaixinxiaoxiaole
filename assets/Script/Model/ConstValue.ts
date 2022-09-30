@@ -9,7 +9,7 @@ export const CELL_TYPE = {
     F : 6,
     BIRD : 7
 }
-export const CELL_BASE_NUM = 6;
+export const CELL_BASE_NUM = 4;
 export const CELL_STATUS = {
     NORMAL: "normal" ,
     CLICK: "click",
@@ -19,8 +19,8 @@ export const CELL_STATUS = {
     BIRD: "bird"
 } 
 
-export const GRID_HEIGHT = 8;
-export const GRID_WIDTH = 5;
+export const GRID_HEIGHT = 9;
+export const GRID_WIDTH = 9;
 
 export const CELL_WIDTH = 70;
 export const CELL_HEIGHT = 70;
